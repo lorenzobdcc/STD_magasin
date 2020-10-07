@@ -1,0 +1,10 @@
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\bin\Debug\STD_magasin.exe.config
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\bin\Debug\STD_magasin.exe
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\bin\Debug\STD_magasin.pdb
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.Form1.resources
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.Properties.Resources.resources
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.csproj.GenerateResource.cache
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.csproj.CoreCompileInputs.cache
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.exe
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.pdb
+C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.csprojAssemblyReference.cache
