@@ -53,9 +53,10 @@
             // 
             // scene1
             // 
+            this.scene1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.scene1.Location = new System.Drawing.Point(12, 47);
             this.scene1.Name = "scene1";
-            this.scene1.Size = new System.Drawing.Size(852, 469);
+            this.scene1.Size = new System.Drawing.Size(800, 500);
             this.scene1.TabIndex = 2;
             this.scene1.Text = "scene1";
             // 
@@ -63,7 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 520);
+            this.ClientSize = new System.Drawing.Size(957, 631);
             this.Controls.Add(this.scene1);
             this.Controls.Add(this.lbl_client);
             this.Controls.Add(this.lbl_caisse);

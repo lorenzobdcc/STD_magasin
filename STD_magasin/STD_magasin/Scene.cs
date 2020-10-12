@@ -18,6 +18,9 @@ namespace STD_magasin
         private const int FPS = 60;
         Random rnd = new Random();
 
+        const int HEIGHT = 500;
+        const int WIDTH = 800;
+
 
         private Bitmap bitmap = null;
         private Graphics g = null;
@@ -46,7 +49,7 @@ namespace STD_magasin
             int positionCaisse_x = 400;
             for (int i = 0; i < CLIENT_MIN; i++)
             {
-                Client client = new Client(new Vector2(rnd.Next(400),rnd.Next(400)), new Size(20, 20), new Vector2(rnd.Next(-50,50), rnd.Next(-50,50)), 2000,1);
+                Client client = new Client(new Vector2(rnd.Next(400),rnd.Next(400)), new Size(20, 20), new Vector2(rnd.Next(-50,50), rnd.Next(-50,50)), 2000,1,HEIGHT,WIDTH);
                 lstClients.Add(client);
                 Paint += client.Paint;
             }

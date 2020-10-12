@@ -16,13 +16,16 @@ namespace STD_magasin
         private readonly float timeFactor;
 
         int typeClient;
+        int widthMagasin;
+        int heightMagasin;
 
 
-        public Client(Vector2 startPosition, Size size, Vector2 speed, float timeFactor,int type) : base(startPosition, size, speed)
+        public Client(Vector2 startPosition, Size size, Vector2 speed, float timeFactor,int type, int height, int width) : base(startPosition, size, speed)
         {
+            widthMagasin = width;
+            heightMagasin = height;
             typeClient = type;
             this.timeFactor = timeFactor;
-
             destination =speed;
         }
 
@@ -38,6 +41,23 @@ namespace STD_magasin
         }
         public override void Paint(object sender, PaintEventArgs e)
         {
+            if (Position.X > widthMagasin -Size.Width || Position.X < 0)
+            {
+                startPosition = Position;
+                destination.X = -destination.X;
+                
+                sw.Restart();
+            }
+
+            if (Position.Y  > heightMagasin -Size.Height || Position.Y < 0)
+            {
+                startPosition = Position;
+                destination.Y = -destination.Y;
+
+                sw.Restart();
+                
+            }
+
             // Create pen.
             SolidBrush myBrush = new SolidBrush(Color.Red);
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
