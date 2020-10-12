@@ -26,6 +26,7 @@ namespace STD_magasin
         private Graphics g = null;
         private readonly Timer tmrFrame;
         private bool disposed = false;
+        Stopwatch stTimer;
 
 
         public List<Client> lstClients = new List<Client>();
@@ -42,24 +43,26 @@ namespace STD_magasin
                 Enabled = true
             };
             tmrFrame.Tick += TmrFrame_Tick;
+            stTimer = new Stopwatch();
+            stTimer.Start();
         }
         public void AddClients()
         {
-            int positionCaisse_y = 50;
+            int positionCaisse_y = 70;
             int positionCaisse_x = 400;
-            for (int i = 0; i < CLIENT_MIN; i++)
+            for (int i = 0; i < 20; i++)
             {
-                Client client = new Client(new Vector2(rnd.Next(400),rnd.Next(400)), new Size(20, 20), new Vector2(rnd.Next(-50,50), rnd.Next(-50,50)), 2000,1,HEIGHT,WIDTH);
+                Client client = new Client(new Vector2(rnd.Next(400), rnd.Next(400)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
                 lstClients.Add(client);
                 Paint += client.Paint;
             }
-            for (int i = 0; i < CLIENT_MIN; i++)
+            for (int i = 0; i < CAISSE_MAX; i++)
             {
-                Caisse caisse = new Caisse(new Vector2(positionCaisse_y*i, positionCaisse_x), new Size(2, 2), new Vector2(50, -50), 200);
+                Caisse caisse = new Caisse(new Vector2(positionCaisse_y * i, positionCaisse_x), new Size(2, 2), new Vector2(50, -50), 200, lstClients);
                 lstCaisses.Add(caisse);
                 Paint += caisse.Paint;
             }
-
+            lstCaisses[0].isOpen = true;
         }
         private void TmrFrame_Tick(object sender, System.EventArgs e) => Invalidate();
 
@@ -74,8 +77,9 @@ namespace STD_magasin
             p.Graphics.Clear(BackColor);
             base.OnPaint(p);
             e.Graphics.DrawImage(bitmap, new Point(0, 0));
-
-
+            AddNewClient();
+            CheckNumberOfCaisse();
+            DeleteClient();
         }
 
         protected override void Dispose(bool disposing)
@@ -94,8 +98,76 @@ namespace STD_magasin
             // Free unmanaged resources
             // Set large fields to null
             disposed = true;
-
             base.Dispose(disposing);
+        }
+
+        private void AddNewClient()
+        {
+            if (stTimer.Elapsed.TotalSeconds > 3)
+            {
+                Client client = new Client(new Vector2(rnd.Next(400), rnd.Next(400)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
+                lstClients.Add(client);
+                Paint += client.Paint;
+                stTimer.Restart();
+            }
+        }
+        private void CheckNumberOfCaisse()
+        {
+            int clientLibre = 0;
+            int caisseOuverte = 0;
+            foreach (var client in lstClients)
+            {
+                if (client.estLibre)
+                {
+                    clientLibre++;
+                }
+            }
+            foreach (var caisse in lstCaisses)
+            {
+                if (caisse.isOpen)
+                {
+                    caisseOuverte++;
+                }
+            }
+            if (clientLibre - caisseOuverte * 5 >= 3)
+            {
+                foreach (var caisse in lstCaisses)
+                {
+                    if (caisse.isOpen == false)
+                    {
+                        caisse.isOpen = true;
+                        break;
+                    }
+                }
+            }
+            if (caisseOuverte > 1)
+            {
+                if (clientLibre - caisseOuverte * 5 <= 2)
+                {
+                    foreach (var caisse in lstCaisses)
+                    {
+                        if (caisse.isOpen == true && caisse.lstClientCaisse.Count == 0)
+                        {
+                            caisse.isOpen = false;
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+        }
+        private void DeleteClient()
+        {
+            foreach (var client in lstClients)
+            {
+                if (client.aFiniEnCaisse)
+                {
+                    client.myBrush.Color = Color.Empty;
+                    lstClients.Remove(client);
+                    break;
+                }
+            }
         }
 
         ~Scene() => Dispose(false);

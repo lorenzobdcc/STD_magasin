@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace STD_magasin
@@ -15,28 +17,63 @@ namespace STD_magasin
 
         private readonly float timeFactor;
 
-        int typeClient;
         int widthMagasin;
         int heightMagasin;
+        public bool isInQueue;
+        int timer;
+        public bool estLibre;
+        public SolidBrush myBrush;
+        public Stopwatch stTimer;
+        public int tempsEnCaisse;
+        public bool aFiniEnCaisse;
+        SolidBrush defaultBrush;
+
 
 
         public Client(Vector2 startPosition, Size size, Vector2 speed, float timeFactor,int type, int height, int width) : base(startPosition, size, speed)
         {
             widthMagasin = width;
             heightMagasin = height;
-            typeClient = type;
             this.timeFactor = timeFactor;
             destination =speed;
+            isInQueue = false;
+            estLibre = false;
+            aFiniEnCaisse = false;
+            stTimer = new Stopwatch();
+            stTimer.Start();
+            switch (type)
+            {
+                case 1:
+
+                    myBrush = new SolidBrush(Color.Red);
+                    timer = 15;
+                    tempsEnCaisse = 10;
+                    break;
+                case 2:
+                    
+                    myBrush = new SolidBrush(Color.Orange);
+                    timer = 10;
+                    tempsEnCaisse = 7;
+                    break;
+                case 3:
+
+                    myBrush = new SolidBrush(Color.Yellow);
+                    timer = 5;
+                    tempsEnCaisse = 5;
+                    break;
+
+                default:
+                    break;
+            }
+            defaultBrush = myBrush;
         }
 
         public override Vector2 Position
         {
             get
             {
-
                 float elapsedTime = sw.ElapsedMilliseconds / 1000f;               
                 return startPosition + (elapsedTime * destination);
-
             }
         }
         public override void Paint(object sender, PaintEventArgs e)
@@ -58,13 +95,27 @@ namespace STD_magasin
                 
             }
 
-            // Create pen.
-            SolidBrush myBrush = new SolidBrush(Color.Red);
+            if (stTimer.Elapsed.TotalSeconds >= timer && isInQueue == false)
+            {
+                estLibre = true;
+                myBrush = new SolidBrush(Color.Green);
+            }
+            else
+            {
+                myBrush = defaultBrush;
+            }
+            if (aFiniEnCaisse)
+            {
+                myBrush = new SolidBrush(Color.Empty);
+            }
+
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             // Draw ellipse to screen.
-            e.Graphics.FillEllipse(Brushes.Red, new Rectangle(Point.Round(Position.ToPointF()), Size));
+            e.Graphics.FillEllipse(myBrush, new Rectangle(Point.Round(Position.ToPointF()), Size));
             
 
         }
+
+
     }
 }

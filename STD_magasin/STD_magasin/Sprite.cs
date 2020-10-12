@@ -14,9 +14,9 @@ namespace STD_magasin
         private const float DEFAULT_SPEED_X = 10f;
         private const float DEFAULT_SPEED_Y = 10f;
 
-        protected readonly Stopwatch sw;
-        protected Vector2 destination;
-        protected Vector2 startPosition;
+        public  Stopwatch sw;
+        public  Vector2 destination;
+        public Vector2 startPosition;
 
         public Sprite(Vector2 startPosition, Size size, Vector2 destination)
         {
