@@ -103,7 +103,7 @@ namespace STD_magasin
 
         private void AddNewClient()
         {
-            if (stTimer.Elapsed.TotalSeconds > 3)
+            if (stTimer.Elapsed.TotalSeconds > 2)
             {
                 Client client = new Client(new Vector2(rnd.Next(400), rnd.Next(400)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
                 lstClients.Add(client);

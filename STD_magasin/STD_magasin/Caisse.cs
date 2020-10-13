@@ -66,6 +66,12 @@ namespace STD_magasin
             GetPositionClient();
             PassageEnCaisse();
             DeleteClient();
+            SolidBrush whiteBrush = new SolidBrush(Color.White);
+            if (clientEnCaisse != null)
+            {
+            e.Graphics.DrawString((clientEnCaisse.tempsEnCaisse - clientEnCaisse.stTimer.Elapsed.Seconds).ToString(), new Font("Arial", 16), whiteBrush, Position.ToPointF());
+            }
+
 
         }
 
