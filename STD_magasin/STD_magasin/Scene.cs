@@ -12,9 +12,14 @@ namespace STD_magasin
 {
     public class Scene : Control
     {
-        const int CLIENT_MAX = 50;
-        const int CLIENT_MIN = 10;
+        const int CLIENT_MIN = 20;
         const int CAISSE_MAX = 10;
+        const int SECOND_SPAWN_CLIENT = 2;
+        const int NBR_CLIENT_MAX_CAISSE = 5;
+        const int NBR_CLIENT_TO_OPEN_CAISSE = 3;
+        const int NBR_CLIENT_TO_CLOSE_CAISSE = 2;
+        const int DEFAULT_X_FOR_SPAWN = 400;
+        const int DEFAULT_Y_FOR_SPAWN = 70;
         private const int FPS = 60;
         Random rnd = new Random();
 
@@ -46,12 +51,16 @@ namespace STD_magasin
             stTimer = new Stopwatch();
             stTimer.Start();
         }
+        /// <summary>
+        /// ajoute les clients de base du magasin et les caisses
+        /// </summary>
         public void AddClients()
         {
-            int positionCaisse_y = 70;
-            int positionCaisse_x = 400;
-            for (int i = 0; i < 20; i++)
+            int positionCaisse_y = DEFAULT_Y_FOR_SPAWN;
+            int positionCaisse_x = DEFAULT_X_FOR_SPAWN;
+            for (int i = 0; i < CLIENT_MIN; i++)
             {
+                //ajoute des client a une position aléatoire en 0 et 400 et x et y avec une direction aléatoire
                 Client client = new Client(new Vector2(rnd.Next(400), rnd.Next(400)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
                 lstClients.Add(client);
                 Paint += client.Paint;
@@ -65,7 +74,10 @@ namespace STD_magasin
             lstCaisses[0].isOpen = true;
         }
         private void TmrFrame_Tick(object sender, System.EventArgs e) => Invalidate();
-
+        /// <summary>
+        /// dessine les diferent ellements de la scene
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             // Initialize bitmap and g if null
@@ -100,10 +112,12 @@ namespace STD_magasin
             disposed = true;
             base.Dispose(disposing);
         }
-
+        /// <summary>
+        /// ajoute un client si le temps est dépasé
+        /// </summary>
         private void AddNewClient()
         {
-            if (stTimer.Elapsed.TotalSeconds > 2)
+            if (stTimer.Elapsed.TotalSeconds > SECOND_SPAWN_CLIENT)
             {
                 Client client = new Client(new Vector2(rnd.Next(400), rnd.Next(400)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
                 lstClients.Add(client);
@@ -111,10 +125,14 @@ namespace STD_magasin
                 stTimer.Restart();
             }
         }
+        /// <summary>
+        /// verifie si le nombre de caisse est suffisant ou superieur au nombre de clients dans le magasin
+        /// </summary>
         private void CheckNumberOfCaisse()
         {
             int clientLibre = 0;
             int caisseOuverte = 0;
+            //compte le nombre de client en attente d'etre pris en charge
             foreach (var client in lstClients)
             {
                 if (client.estLibre)
@@ -122,6 +140,7 @@ namespace STD_magasin
                     clientLibre++;
                 }
             }
+            //compte le nombres de caisses ouverte
             foreach (var caisse in lstCaisses)
             {
                 if (caisse.isOpen)
@@ -129,7 +148,8 @@ namespace STD_magasin
                     caisseOuverte++;
                 }
             }
-            if (clientLibre - caisseOuverte * 5 >= 3)
+            //si le nombre de clients en attente de faire la queue est plus grand que 3 passe une caisse de fermé a ouverte
+            if (clientLibre - caisseOuverte * NBR_CLIENT_MAX_CAISSE >= NBR_CLIENT_TO_OPEN_CAISSE)
             {
                 foreach (var caisse in lstCaisses)
                 {
@@ -142,7 +162,8 @@ namespace STD_magasin
             }
             if (caisseOuverte > 1)
             {
-                if (clientLibre - caisseOuverte * 5 <= 2)
+                //calcul si le nombre de caisse est trop élevé 
+                if (clientLibre - caisseOuverte * NBR_CLIENT_MAX_CAISSE <= NBR_CLIENT_TO_CLOSE_CAISSE)
                 {
                     foreach (var caisse in lstCaisses)
                     {
@@ -157,6 +178,9 @@ namespace STD_magasin
             }
 
         }
+        /// <summary>
+        /// supprime un client de la liste des clients
+        /// </summary>
         private void DeleteClient()
         {
             foreach (var client in lstClients)

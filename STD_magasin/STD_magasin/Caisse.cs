@@ -13,8 +13,9 @@ namespace STD_magasin
     public class Caisse : Sprite
     {
 
-        private readonly float timeFactor;
         const int MAX_CLIENTS = 5;
+        const int WIDTH_AND_HEIGHT_OF_CAISSE = 30;
+        const int DECALAGE_BETWEEN_CLIENT = 40;
 
         List<Client> lstClientMagasin = new List<Client>();
         public List<Client> lstClientCaisse = new List<Client>();
@@ -26,7 +27,6 @@ namespace STD_magasin
 
         public Caisse(Vector2 startPosition, Size size, Vector2 speed, float timeFactor, List<Client> lstClient) : base(startPosition, size, speed)
         {
-            this.timeFactor = timeFactor;
             destination = new Vector2(5, 5);
             lstClientMagasin = lstClient;
             isOpen = false;
@@ -57,7 +57,7 @@ namespace STD_magasin
                 myBrush = new SolidBrush(Color.Red);
             }
             // Draw ellipse to screen.
-            e.Graphics.FillRectangle(myBrush, startPosition.X, startPosition.Y, 30, 30);
+            e.Graphics.FillRectangle(myBrush, startPosition.X, startPosition.Y, WIDTH_AND_HEIGHT_OF_CAISSE, WIDTH_AND_HEIGHT_OF_CAISSE);
 
             if (isOpen)
             {
@@ -74,7 +74,9 @@ namespace STD_magasin
 
 
         }
-
+        /// <summary>
+        /// ajoute un client libre a la caisse
+        /// </summary>
         public void GetClient()
         {
             if (lstClientCaisse.Count < MAX_CLIENTS)
@@ -95,16 +97,21 @@ namespace STD_magasin
                 }
             }
         }
+        /// <summary>
+        /// aligne les position des client pour etre au dessus de la caisse
+        /// </summary>
         public void GetPositionClient()
         {
             int i = 1;
             foreach (var client in lstClientCaisse)
             {
-                client.startPosition.Y = this.Position.Y - 40 * i;
+                client.startPosition.Y = this.Position.Y - DECALAGE_BETWEEN_CLIENT * i;
                 i++;
             }
         }
-
+        /// <summary>
+        /// suprime un client apres avoir fini en caisse
+        /// </summary>
         public void DeleteClient()
         {
             foreach (var client in lstClientCaisse)
@@ -119,6 +126,9 @@ namespace STD_magasin
                 }
             }
         }
+        /// <summary>
+        /// fais passer en caisse le prochain client dans la queue
+        /// </summary>
         public void PassageEnCaisse()
         {
             if (clientEnCaisse == null)

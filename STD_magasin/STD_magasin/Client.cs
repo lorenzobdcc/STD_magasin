@@ -15,12 +15,10 @@ namespace STD_magasin
     public class Client : Sprite
     {
 
-        private readonly float timeFactor;
-
-        int widthMagasin;
-        int heightMagasin;
+        readonly int widthMagasin;
+        readonly int heightMagasin;
         public bool isInQueue;
-        int timer;
+        readonly int timer;
         public bool estLibre;
         public SolidBrush myBrush;
         public Stopwatch stTimer;
@@ -29,18 +27,27 @@ namespace STD_magasin
         SolidBrush defaultBrush;
 
 
-
+        /// <summary>
+        /// ctor complett
+        /// </summary>
+        /// <param name="startPosition"></param>
+        /// <param name="size"></param>
+        /// <param name="speed"></param>
+        /// <param name="timeFactor"></param>
+        /// <param name="type"></param>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
         public Client(Vector2 startPosition, Size size, Vector2 speed, float timeFactor,int type, int height, int width) : base(startPosition, size, speed)
         {
             widthMagasin = width;
             heightMagasin = height;
-            this.timeFactor = timeFactor;
             destination =speed;
             isInQueue = false;
             estLibre = false;
             aFiniEnCaisse = false;
             stTimer = new Stopwatch();
             stTimer.Start();
+            //le type de client fais varier le temps d'attente et la couleur du client dans le magasin
             switch (type)
             {
                 case 1:
@@ -68,6 +75,9 @@ namespace STD_magasin
             defaultBrush = myBrush;
         }
 
+        /// <summary>
+        /// postion calculé d'apres le temps le départ et la direction que doit prendre le client
+        /// </summary>
         public override Vector2 Position
         {
             get
@@ -76,8 +86,14 @@ namespace STD_magasin
                 return startPosition + (elapsedTime * destination);
             }
         }
+        /// <summary>
+        /// dessine le client
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public override void Paint(object sender, PaintEventArgs e)
         {
+            //fais rebondir le client si il touche le bord du magasin
             if (Position.X > widthMagasin -Size.Width || Position.X < 0)
             {
                 startPosition = Position;
@@ -85,7 +101,7 @@ namespace STD_magasin
                 
                 sw.Restart();
             }
-
+            //fais rebondir le client si il touche le bord du magasin
             if (Position.Y  > heightMagasin -Size.Height || Position.Y < 0)
             {
                 startPosition = Position;
@@ -94,7 +110,7 @@ namespace STD_magasin
                 sw.Restart();
                 
             }
-
+            //si le temps définit pour faire ces course le client passe en état de recherche de caisse
             if (stTimer.Elapsed.TotalSeconds >= timer && isInQueue == false)
             {
                 estLibre = true;
@@ -104,6 +120,7 @@ namespace STD_magasin
             {
                 myBrush = defaultBrush;
             }
+            //quand il a fini de passer en caisse il se dessine en transparent pour éviter de rester afficher
             if (aFiniEnCaisse)
             {
                 myBrush = new SolidBrush(Color.Empty);
