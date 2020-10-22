@@ -1,11 +1,16 @@
-﻿using System.Diagnostics;
+﻿///Auteur : Lorenzo Bauduccio
+///Classe : T.IS E2B
+///Version : 1.0
+///Date : 26.10.2020
+///description : classe de qui permet de créer diferent composant pour l'affichage
+using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
 
 namespace STD_magasin
 {
-    public  class Sprite
+    public class Sprite
     {
         private const float DEFAULT_POSITION_X = 50;
         private const float DEFAULT_POSITION_Y = 50;

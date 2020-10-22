@@ -28,33 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbl_caisse = new System.Windows.Forms.Label();
-            this.lbl_client = new System.Windows.Forms.Label();
             this.scene1 = new STD_magasin.Scene();
             this.SuspendLayout();
-            // 
-            // lbl_caisse
-            // 
-            this.lbl_caisse.AutoSize = true;
-            this.lbl_caisse.Location = new System.Drawing.Point(12, 9);
-            this.lbl_caisse.Name = "lbl_caisse";
-            this.lbl_caisse.Size = new System.Drawing.Size(53, 13);
-            this.lbl_caisse.TabIndex = 0;
-            this.lbl_caisse.Text = "lbl_caisse";
-            // 
-            // lbl_client
-            // 
-            this.lbl_client.AutoSize = true;
-            this.lbl_client.Location = new System.Drawing.Point(12, 31);
-            this.lbl_client.Name = "lbl_client";
-            this.lbl_client.Size = new System.Drawing.Size(48, 13);
-            this.lbl_client.TabIndex = 1;
-            this.lbl_client.Text = "lbl_client";
             // 
             // scene1
             // 
             this.scene1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.scene1.Location = new System.Drawing.Point(12, 47);
+            this.scene1.Location = new System.Drawing.Point(0, -1);
             this.scene1.Name = "scene1";
             this.scene1.Size = new System.Drawing.Size(800, 500);
             this.scene1.TabIndex = 2;
@@ -64,22 +44,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(957, 631);
+            this.ClientSize = new System.Drawing.Size(799, 498);
             this.Controls.Add(this.scene1);
-            this.Controls.Add(this.lbl_client);
-            this.Controls.Add(this.lbl_caisse);
+            this.MaximumSize = new System.Drawing.Size(815, 537);
+            this.MinimumSize = new System.Drawing.Size(815, 537);
             this.Name = "Form1";
             this.Text = "STD_magasin";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lbl_caisse;
-        private System.Windows.Forms.Label lbl_client;
         private Scene scene;
         private Scene scene1;
     }

@@ -1,4 +1,9 @@
-﻿using System;
+﻿///Auteur : Lorenzo Bauduccio
+///Classe : T.IS E2B
+///Version : 1.0
+///Date : 26.10.2020
+///description : classe qui représente le magasin et permet la gestion des clients et des caisses
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -18,15 +23,14 @@ namespace STD_magasin
         const int NBR_CLIENT_MAX_CAISSE = 5;
         const int NBR_CLIENT_TO_OPEN_CAISSE = 3;
         const int NBR_CLIENT_TO_CLOSE_CAISSE = 2;
-        const int DEFAULT_X_FOR_SPAWN = 400;
-        const int DEFAULT_Y_FOR_SPAWN = 70;
-        private const int FPS = 60;
-        Random rnd = new Random();
-
+        const int DEFAULT_X_FOR_SPAWN_CAISSE = 440;
+        const int DEFAULT_Y_FOR_SPAWN_CAISSE = 70;
         const int HEIGHT = 500;
         const int WIDTH = 800;
+        private const int FPS = 60;
+        
 
-
+        Random rnd = new Random();
         private Bitmap bitmap = null;
         private Graphics g = null;
         private readonly Timer tmrFrame;
@@ -56,18 +60,17 @@ namespace STD_magasin
         /// </summary>
         public void AddClients()
         {
-            int positionCaisse_y = DEFAULT_Y_FOR_SPAWN;
-            int positionCaisse_x = DEFAULT_X_FOR_SPAWN;
             for (int i = 0; i < CLIENT_MIN; i++)
             {
-                //ajoute des client a une position aléatoire en 0 et 400 et x et y avec une direction aléatoire
-                Client client = new Client(new Vector2(rnd.Next(400), rnd.Next(400)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
+                //ajoute des client a une position aléatoire en 0 et 480 et x et y avec une direction aléatoire
+                Client client = new Client(new Vector2(rnd.Next(HEIGHT), rnd.Next(WIDTH)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
                 lstClients.Add(client);
                 Paint += client.Paint;
             }
             for (int i = 0; i < CAISSE_MAX; i++)
             {
-                Caisse caisse = new Caisse(new Vector2(positionCaisse_y * i, positionCaisse_x), new Size(2, 2), new Vector2(50, -50), 200, lstClients);
+                //i +1 pour que la caisse ne soit pas contre le bord
+                Caisse caisse = new Caisse(new Vector2(DEFAULT_Y_FOR_SPAWN_CAISSE * (i+1), DEFAULT_X_FOR_SPAWN_CAISSE), new Size(2, 2), new Vector2(50, -50), 200, lstClients);
                 lstCaisses.Add(caisse);
                 Paint += caisse.Paint;
             }
@@ -92,6 +95,43 @@ namespace STD_magasin
             AddNewClient();
             CheckNumberOfCaisse();
             DeleteClient();
+            AfficheStats(  e);
+        }
+        /// <summary>
+        /// affiche les differentes statistique du magasin
+        /// </summary>
+        /// <param name="e"></param>
+        private void AfficheStats(PaintEventArgs e)
+        {
+
+            SolidBrush whiteBrush = new SolidBrush(Color.White);
+
+            int clientLibre = 0;
+            int clientFaisLaQueue = 0;
+            int caisseOuverte = 0;
+            foreach (var caisse in lstCaisses)
+            {
+                if (caisse.isOpen)
+                {
+                    caisseOuverte++;
+                }
+            }
+            foreach (var client in lstClients)
+            {
+                if (client.estLibre)
+                {
+                    clientLibre++;
+                }
+                if (client.isInQueue)
+                {
+                    clientFaisLaQueue++;
+                }
+            }
+            e.Graphics.DrawString("Clients total: " + (lstClients.Count).ToString(), new Font("Arial", 16), whiteBrush, new Point(550, 10));
+            e.Graphics.DrawString("Clients en achat: " + (lstClients.Count - clientFaisLaQueue).ToString(), new Font("Arial", 16), whiteBrush, new Point(550, 30));
+            e.Graphics.DrawString("Clients à la queue: " + (clientFaisLaQueue).ToString(), new Font("Arial", 16), whiteBrush, new Point(550, 50));
+            e.Graphics.DrawString("Caisses ouvertes: " + (caisseOuverte).ToString(), new Font("Arial", 16), whiteBrush, new Point(550, 70));
+
         }
 
         protected override void Dispose(bool disposing)
@@ -119,7 +159,7 @@ namespace STD_magasin
         {
             if (stTimer.Elapsed.TotalSeconds > SECOND_SPAWN_CLIENT)
             {
-                Client client = new Client(new Vector2(rnd.Next(400), rnd.Next(400)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
+                Client client = new Client(new Vector2(rnd.Next(HEIGHT), rnd.Next(WIDTH)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
                 lstClients.Add(client);
                 Paint += client.Paint;
                 stTimer.Restart();

@@ -1,4 +1,9 @@
-﻿using System;
+﻿///Auteur : Lorenzo Bauduccio
+///Classe : T.IS E2B
+///Version : 1.0
+///Date : 26.10.2020
+///description : classe de gestion des clients et de leur déplacement
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;

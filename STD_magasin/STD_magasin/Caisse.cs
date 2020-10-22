@@ -1,4 +1,9 @@
-﻿using System;
+﻿///Auteur : Lorenzo Bauduccio
+///Classe : T.IS E2B
+///Version : 1.0
+///Date : 26.10.2020
+///description : classe de gestion de la caisse et de ces clients
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -42,21 +47,17 @@ namespace STD_magasin
         public override void Paint(object sender, PaintEventArgs e)
         {
 
-
             if (isOpen)
             {
                 myBrush = new SolidBrush(Color.Green);
             }
             else
             {
-                myBrush = new SolidBrush(Color.Blue);
-            }
-
-            if (lstClientCaisse.Count == 0)
-            {
                 myBrush = new SolidBrush(Color.Red);
             }
-            // Draw ellipse to screen.
+
+            
+
             e.Graphics.FillRectangle(myBrush, startPosition.X, startPosition.Y, WIDTH_AND_HEIGHT_OF_CAISSE, WIDTH_AND_HEIGHT_OF_CAISSE);
 
             if (isOpen)
@@ -66,6 +67,7 @@ namespace STD_magasin
             GetPositionClient();
             PassageEnCaisse();
             DeleteClient();
+            //si un client est a la caisse les secondes avant le suivant s'affiche
             SolidBrush whiteBrush = new SolidBrush(Color.White);
             if (clientEnCaisse != null)
             {

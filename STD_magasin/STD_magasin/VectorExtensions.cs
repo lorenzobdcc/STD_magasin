@@ -1,4 +1,9 @@
-﻿using System;
+﻿///Auteur : Lorenzo Bauduccio
+///Classe : T.IS E2B
+///Version : 1.0
+///Date : 26.10.2020
+///description : permet de créer des vecteur qui peuvent etre convertie en Pointf
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
