@@ -30,7 +30,8 @@ namespace STD_magasin
         public int tempsEnCaisse;
         public bool aFiniEnCaisse;
         SolidBrush defaultBrush;
-
+        public Vector2 actualPosition;
+        public Stopwatch sw;
 
         /// <summary>
         /// ctor complett
@@ -52,7 +53,11 @@ namespace STD_magasin
             aFiniEnCaisse = false;
             stTimer = new Stopwatch();
             stTimer.Start();
-            //le type de client fais varier le temps d'attente et la couleur du client dans le magasin
+            sw = new Stopwatch();
+            sw.Start();
+
+            actualPosition = startPosition;
+            //le type de client fait varier le temps d'attente et la couleur du client dans le magasin
             switch (type)
             {
                 case 1:
@@ -87,7 +92,8 @@ namespace STD_magasin
         {
             get
             {
-                float elapsedTime = sw.ElapsedMilliseconds / 1000f;               
+                //return  Move(destination);
+                float elapsedTime = sw.ElapsedMilliseconds / 1000f;
                 return startPosition + (elapsedTime * destination);
             }
         }
@@ -103,7 +109,6 @@ namespace STD_magasin
             {
                 startPosition = Position;
                 destination.X = -destination.X;
-                
                 sw.Restart();
             }
             //fais rebondir le client si il touche le bord du magasin
@@ -111,9 +116,7 @@ namespace STD_magasin
             {
                 startPosition = Position;
                 destination.Y = -destination.Y;
-
                 sw.Restart();
-                
             }
             //si le temps définit pour faire ces course le client passe en état de recherche de caisse
             if (stTimer.Elapsed.TotalSeconds >= timer && isInQueue == false)
