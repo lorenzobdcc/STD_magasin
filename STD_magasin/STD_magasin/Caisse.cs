@@ -66,6 +66,7 @@ namespace STD_magasin
             
             PassageEnCaisse();
             DeleteClient();
+            GetPositionClient();
             //si un client est a la caisse les secondes avant le suivant s'affiche
             SolidBrush whiteBrush = new SolidBrush(Color.White);
             if (clientEnCaisse != null)
@@ -88,8 +89,10 @@ namespace STD_magasin
                     {
                         client.isInQueue = true;
                         client.stTimer.Reset();
+                        client.sw.Reset();
+                        client.startPosition = this.Position;
+                        client.destination = new Vector2(0, 0);
                         lstClientCaisse.Add(client);
-                        GetPositionClient();
                         break;
                     }
                 }
@@ -100,13 +103,9 @@ namespace STD_magasin
         /// </summary>
         public void GetPositionClient()
         {
-
             for (int i = 0; i < lstClientCaisse.Count; i++)
             {
-                int copieX = Convert.ToInt32( lstClientCaisse[i].destination.Y);
-                lstClientCaisse[i].destination.Y = this.Position.Y - DECALAGE_BETWEEN_CLIENT*(i+1);
-                lstClientCaisse[i].destination.X = this.Position.X;
-                Console.WriteLine("avant: "+copieX+ " apres :"+DECALAGE_BETWEEN_CLIENT * (i + 1));
+                lstClientCaisse[i].startPosition.Y = this.Position.Y - DECALAGE_BETWEEN_CLIENT * (i+1);
             }
         }
         /// <summary>
@@ -121,7 +120,6 @@ namespace STD_magasin
                 clientEnCaisse = null;
                 lstClientCaisse[0].aFiniEnCaisse = true;
                 lstClientCaisse.RemoveAt(0);
-                GetPositionClient();
                 }
             }
 

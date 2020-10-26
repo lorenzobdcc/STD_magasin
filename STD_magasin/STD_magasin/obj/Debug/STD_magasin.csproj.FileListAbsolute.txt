@@ -11,10 +11,10 @@ C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\bin\Debug\STD_ma
 C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\bin\Debug\STD_magasin.exe
 C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\bin\Debug\STD_magasin.pdb
 C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.csprojAssemblyReference.cache
-C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.Form1.resources
 C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.Properties.Resources.resources
 C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.csproj.GenerateResource.cache
 C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.csproj.CoreCompileInputs.cache
 C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.exe
 C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.pdb
 C:\Users\Administrateur\source\repos\STD\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.Magasin.resources
+C:\Users\loren\source\repos\STD_magasin\STD_magasin\STD_magasin\obj\Debug\STD_magasin.Magasin.resources

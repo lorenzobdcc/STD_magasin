@@ -31,6 +31,7 @@ namespace STD_magasin
         public bool aFiniEnCaisse;
         SolidBrush defaultBrush;
         public Vector2 actualPosition;
+        public Stopwatch sw;
 
 
         /// <summary>
@@ -53,6 +54,8 @@ namespace STD_magasin
             aFiniEnCaisse = false;
             stTimer = new Stopwatch();
             stTimer.Start();
+            sw = new Stopwatch();
+            sw.Start();
 
             actualPosition = startPosition;
             //le type de client fait varier le temps d'attente et la couleur du client dans le magasin
@@ -90,49 +93,15 @@ namespace STD_magasin
         {
             get
             {
-                return  Move(destination);
+                float elapsedTime = sw.ElapsedMilliseconds / 1000f;
+                return startPosition + (elapsedTime * destination);
             }
         }
         /// <summary>
         /// déplacement d'une position A à la position B
         /// </summary>
         /// <param name="destination"></param>
-        private Vector2 Move(Vector2 destination)
-        {
-            
-            double distanceTraveled = 1;
-            double xDiff = destination.X - actualPosition.X;
-            double yDiff = destination.Y - actualPosition.Y;
-            double angleRad;
-            if (xDiff > 0 && yDiff > 0)
-                angleRad = Math.Atan(yDiff / xDiff);
-            else if (xDiff < 0 && yDiff > 0)
-                angleRad = Math.PI - Math.Atan(yDiff / -xDiff);
-            else if (xDiff < 0 && yDiff < 0)
-                angleRad = Math.PI + Math.Atan(-yDiff / -xDiff);
-            else if (xDiff > 0 && yDiff < 0)
-                angleRad = 2 * Math.PI - Math.Atan(-yDiff / xDiff);
-            else
-                angleRad = 0;
-            double x = Math.Cos(angleRad) * distanceTraveled;
-            double y = Math.Sin(angleRad) * distanceTraveled;
-            float newX = actualPosition.X + Convert.ToSingle(x);
-            float newY = actualPosition.Y + Convert.ToSingle(y);
-
-            if (newX > actualPosition.X && newX > destination.X)
-                newX = destination.X;
-            if (newX < actualPosition.X && newX < destination.X)
-                newX = destination.X;
-            if (newY > actualPosition.Y && newY > destination.Y)
-                newY = destination.Y;
-            if (newY < actualPosition.Y && newY < destination.Y)
-                newY = destination.Y;
-
-            actualPosition.X = newX;
-            actualPosition.Y = newY;
-            return  new Vector2(newX, newY);
-        }
-
+       
         /// <summary>
         /// dessine le client
         /// </summary>
@@ -145,12 +114,14 @@ namespace STD_magasin
             {
                 startPosition = Position;
                 destination.X = -destination.X;
+                sw.Restart();
             }
             //fais rebondir le client si il touche le bord du magasin
             if (Position.Y  > heightMagasin -Size.Height || Position.Y < 0)
             {
                 startPosition = Position;
                 destination.Y = -destination.Y;
+                sw.Restart();
             }
             //si le temps définit pour faire ces course le client passe en état de recherche de caisse
             if (stTimer.Elapsed.TotalSeconds >= timer && isInQueue == false)
