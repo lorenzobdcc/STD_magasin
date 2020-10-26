@@ -59,12 +59,11 @@ namespace STD_magasin
             
 
             e.Graphics.FillRectangle(myBrush, startPosition.X, startPosition.Y, WIDTH_AND_HEIGHT_OF_CAISSE, WIDTH_AND_HEIGHT_OF_CAISSE);
-
             if (isOpen)
             {
                 GetClient();
             }
-            GetPositionClient();
+            
             PassageEnCaisse();
             DeleteClient();
             //si un client est a la caisse les secondes avant le suivant s'affiche
@@ -87,13 +86,10 @@ namespace STD_magasin
                 {
                     if (client.isInQueue == false && client.estLibre)
                     {
-                        
                         client.isInQueue = true;
-                        client.sw.Reset();
                         client.stTimer.Reset();
-                        client.startPosition = this.Position;
-                        client.destination = new Vector2(0, 0);
                         lstClientCaisse.Add(client);
+                        GetPositionClient();
                         break;
                     }
                 }
@@ -104,11 +100,13 @@ namespace STD_magasin
         /// </summary>
         public void GetPositionClient()
         {
-            int i = 1;
-            foreach (var client in lstClientCaisse)
+
+            for (int i = 0; i < lstClientCaisse.Count; i++)
             {
-                client.startPosition.Y = this.Position.Y - DECALAGE_BETWEEN_CLIENT * i;
-                i++;
+                int copieX = Convert.ToInt32( lstClientCaisse[i].destination.Y);
+                lstClientCaisse[i].destination.Y = this.Position.Y - DECALAGE_BETWEEN_CLIENT*(i+1);
+                lstClientCaisse[i].destination.X = this.Position.X;
+                Console.WriteLine("avant: "+copieX+ " apres :"+DECALAGE_BETWEEN_CLIENT * (i + 1));
             }
         }
         /// <summary>
@@ -116,31 +114,28 @@ namespace STD_magasin
         /// </summary>
         public void DeleteClient()
         {
-            foreach (var client in lstClientCaisse)
+            if (lstClientCaisse.Count >0)
             {
-                if (client.stTimer.Elapsed.Seconds > client.tempsEnCaisse)
+                if (lstClientCaisse[0].stTimer.Elapsed.Seconds > lstClientCaisse[0].tempsEnCaisse)
                 {
-
-                    clientEnCaisse = null;
-                    client.aFiniEnCaisse = true;
-                    lstClientCaisse.Remove(client);
-                    break;
+                clientEnCaisse = null;
+                lstClientCaisse[0].aFiniEnCaisse = true;
+                lstClientCaisse.RemoveAt(0);
+                GetPositionClient();
                 }
             }
+
+            
         }
         /// <summary>
         /// fais passer en caisse le prochain client dans la queue
         /// </summary>
         public void PassageEnCaisse()
         {
-            if (clientEnCaisse == null)
+            if (clientEnCaisse == null && lstClientCaisse.Count>0)
             {
-                foreach (var client in lstClientCaisse)
-                {
-                    clientEnCaisse = client;
-                    client.stTimer.Restart();
-                    break;
-                }
+                    clientEnCaisse = lstClientCaisse[0];
+                    lstClientCaisse[0].stTimer.Restart();
             }
         }
 

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace STD_magasin
 {
-    public partial class Form1 : Form
+    public partial class Magasin : Form
     {
-        public Form1()
+        public Magasin()
         {
             InitializeComponent();
         }

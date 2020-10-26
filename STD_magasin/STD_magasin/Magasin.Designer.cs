@@ -1,6 +1,6 @@
 ﻿namespace STD_magasin
 {
-    partial class Form1
+    partial class Magasin
     {
         /// <summary>
         /// Variable nécessaire au concepteur.

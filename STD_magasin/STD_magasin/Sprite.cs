@@ -19,7 +19,6 @@ namespace STD_magasin
         private const float DEFAULT_SPEED_X = 10f;
         private const float DEFAULT_SPEED_Y = 10f;
 
-        public  Stopwatch sw;
         public  Vector2 destination;
         public Vector2 startPosition;
 
@@ -27,9 +26,7 @@ namespace STD_magasin
         {
             this.startPosition = startPosition;
             Size = size;
-            sw = new Stopwatch();
             this.destination = destination;
-            sw.Start();
         }
 
         public Sprite() :
@@ -38,12 +35,12 @@ namespace STD_magasin
                 new Vector2(DEFAULT_SPEED_X, DEFAULT_SPEED_Y))
         { }
 
+
         public virtual Vector2 Position
         {
             get
             {
-                float elapsedTime = sw.ElapsedMilliseconds / 1000f;
-                return startPosition + elapsedTime * destination;
+                return startPosition ;
             }
         }
 

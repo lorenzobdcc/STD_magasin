@@ -63,14 +63,14 @@ namespace STD_magasin
             for (int i = 0; i < CLIENT_MIN; i++)
             {
                 //ajoute des client a une position aléatoire en 0 et 480 et x et y avec une direction aléatoire
-                Client client = new Client(new Vector2(rnd.Next(HEIGHT), rnd.Next(WIDTH)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
+                Client client = new Client(new Vector2(rnd.Next(HEIGHT), rnd.Next(WIDTH)), new Size(22, 22), new Vector2(rnd.Next(HEIGHT*10), rnd.Next(WIDTH*10)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
                 lstClients.Add(client);
                 Paint += client.Paint;
             }
             for (int i = 0; i < CAISSE_MAX; i++)
             {
                 //i +1 pour que la caisse ne soit pas contre le bord
-                Caisse caisse = new Caisse(new Vector2(DEFAULT_Y_FOR_SPAWN_CAISSE * (i+1), DEFAULT_X_FOR_SPAWN_CAISSE), new Size(2, 2), new Vector2(50, -50), 200, lstClients);
+                Caisse caisse = new Caisse(new Vector2(DEFAULT_Y_FOR_SPAWN_CAISSE * (i+1), DEFAULT_X_FOR_SPAWN_CAISSE), new Size(2, 2), new Vector2(0, 0), 200, lstClients);
                 lstCaisses.Add(caisse);
                 Paint += caisse.Paint;
             }
@@ -159,7 +159,7 @@ namespace STD_magasin
         {
             if (stTimer.Elapsed.TotalSeconds > SECOND_SPAWN_CLIENT)
             {
-                Client client = new Client(new Vector2(rnd.Next(HEIGHT), rnd.Next(WIDTH)), new Size(22, 22), new Vector2(rnd.Next(-50, 50), rnd.Next(-50, 50)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
+                Client client = new Client(new Vector2(rnd.Next(HEIGHT), rnd.Next(WIDTH)), new Size(22, 22), new Vector2(rnd.Next(HEIGHT*10), rnd.Next(WIDTH*10)), 2000, rnd.Next(1, 4), HEIGHT, WIDTH);
                 lstClients.Add(client);
                 Paint += client.Paint;
                 stTimer.Restart();
